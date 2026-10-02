@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#121212">
+<title>Get Sound Recorder</title>
+<style>
+  :root{
+    --bg:#121212; --surface:#1e1e1e; --surface2:#262626;
+    --accent:#f44336; --accent-soft:rgba(244,67,54,.14);
+    --text:#e8eaed; --text2:#9aa0a6; --line:#2d2d2d; --ok:#4caf50; --warn:#ffb74d;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  body{
+    background:var(--bg); color:var(--text);
+    font-family:Roboto,"Segoe UI",system-ui,sans-serif;
+    min-height:100dvh; display:flex; align-items:center; justify-content:center; padding:24px;
+  }
+  .wrap{width:100%; max-width:420px; display:flex; flex-direction:column; gap:18px}
+  .hero{text-align:center}
+  .logo{
+    width:88px; height:88px; border-radius:24px; margin:0 auto 14px;
+    background:linear-gradient(135deg,#f44336,#b71c1c);
+    display:flex; align-items:center; justify-content:center;
+    box-shadow:0 10px 30px rgba(244,67,54,.35);
+  }
+  .logo svg{width:44px; height:44px; fill:#fff}
+  h1{font-size:24px; font-weight:600}
+  .tag{color:var(--text2); font-size:14px; margin-top:4px}
+
+  .card{background:var(--surface); border:1px solid var(--line); border-radius:20px; padding:20px}
+  .file{display:flex; align-items:center; gap:14px; margin-bottom:18px}
+  .file .ic{
+    width:48px; height:48px; min-width:48px; border-radius:12px; background:var(--accent-soft);
+    display:flex; align-items:center; justify-content:center;
+  }
+  .file .ic svg{width:26px; height:26px; fill:var(--accent)}
+  .file .n{font-size:15px; font-weight:500; word-break:break-all}
+  .file .s{font-size:12px; color:var(--text2); margin-top:3px; font-variant-numeric:tabular-nums}
+
+  #dlBtn{
+    display:flex; align-items:center; justify-content:center; gap:10px;
+    width:100%; padding:16px; border:none; border-radius:16px; cursor:pointer;
+    background:var(--accent); color:#fff; font-family:inherit; font-size:17px; font-weight:600;
+    text-decoration:none; box-shadow:0 6px 24px rgba(244,67,54,.4);
+    transition:transform .1s;
+  }
+  #dlBtn:active{transform:scale(.97)}
+  #dlBtn svg{width:22px; height:22px; fill:#fff}
+  #dlBtn.pulse{animation:pulse 1.6s infinite}
+  @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(244,67,54,.5)}70%{box-shadow:0 0 0 18px rgba(244,67,54,0)}100%{box-shadow:0 0 0 0 rgba(244,67,54,0)}}
+
+  #status{
+    display:none; align-items:flex-start; gap:10px; margin-top:14px;
+    background:rgba(255,183,77,.1); border:1px solid rgba(255,183,77,.35);
+    color:var(--warn); border-radius:12px; padding:12px 14px; font-size:13px; line-height:1.5;
+  }
+  #status.show{display:flex}
+  #status.ok{background:rgba(76,175,80,.1); border-color:rgba(76,175,80,.35); color:var(--ok)}
+
+  .steps{list-style:none; counter-reset:s; display:flex; flex-direction:column; gap:12px}
+  .steps li{
+    counter-increment:s; display:flex; gap:12px; font-size:13.5px; color:var(--text2); line-height:1.55;
+  }
+  .steps li::before{
+    content:counter(s); min-width:24px; height:24px; border-radius:50%;
+    background:var(--surface2); color:var(--text); font-size:12px; font-weight:600;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .steps b{color:var(--text); font-weight:600}
+  details{margin-top:4px}
+  summary{cursor:pointer; font-size:14px; color:var(--accent); font-weight:500; padding:6px 0}
+  .foot{text-align:center; color:#5a5a5a; font-size:11.5px; line-height:1.6}
+</style>
+<base target="_blank">
+</head>
+<body>
+<div class="wrap">
+  <div class="hero">
+    <div class="logo">
+      <svg viewBox="0 0 24 24"><path d="M12 14a3 3 0 0 0 3-3V6a3 3 0 0 0-6 0v5a3 3 0 0 0 3 3zm5-3a5 5 0 0 1-10 0H5a7 7 0 0 0 6 6.92V21h2v-3.08A7 7 0 0 0 19 11h-2z"/></svg>
+    </div>
+    <h1>Sound Recorder</h1>
+    <div class="tag">For Samsung Galaxy A52 · Android</div>
+  </div>
+
+  <div class="card">
+    <div class="file">
+      <div class="ic"><svg viewBox="0 0 24 24"><path d="M6 2h9l5 5v13a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2zm8 1.5V8h4.5L14 3.5z"/></svg></div>
+      <div>
+        <div class="n" id="apkName">app-debug.apk</div>
+        <div class="s" id="apkInfo">checking file…</div>
+      </div>
+    </div>
+    <a id="dlBtn" class="pulse" href="app-debug.apk" download>
+      <svg viewBox="0 0 24 24"><path d="M12 16l-5-5h3V4h4v7h3l-5 5zm-7 2h14v2H5v-2z"/></svg>
+      Download APK
+    </a>
+    <div id="status"></div>
+  </div>
+
+  <div class="card">
+    <ol class="steps">
+      <li>Tap <b>Download APK</b> above. When it finishes, tap <b>Open</b> in the download notification (or find it in <b>Files → Downloads</b>).</li>
+      <li>If asked, allow <b>Chrome</b> to install unknown apps: Settings → Apps → Chrome → <b>Install unknown apps → Allow</b>.</li>
+      <li>Play Protect may warn it's from an unknown developer — tap <b>Install anyway</b> / <b>More details → Install anyway</b>.</li>
+      <li>Once installed, open it, tap the mic, and <b>Allow</b> the microphone. Done 🎙️</li>
+    </ol>
+    <details>
+      <summary>Download button does nothing?</summary>
+      <ol class="steps" style="margin-top:10px">
+        <li>Long-press the button → <b>Download link</b> / "Save link".</li>
+        <li>Or type the page address with <b>/app-debug.apk</b> at the end into the address bar.</li>
+        <li>Samsung Internet sometimes blocks APKs — use <b>Chrome</b>.</li>
+      </ol>
+    </details>
+  </div>
+
+  <div class="foot">
+    100% offline · no accounts · no tracking<br>recordings never leave the phone
+  </div>
+</div>
+
+<script>
+(async () => {
+  const st = document.getElementById('status');
+  const info = document.getElementById('apkInfo');
+  try{
+    const r = await fetch('app-debug.apk', {method:'HEAD'});
+    if(!r.ok) throw new Error('not found');
+    const len = +r.headers.get('Content-Length') || 0;
+    info.textContent = (len ? (len/1048576).toFixed(1)+' MB · ' : '') + 'Android APK · debug build';
+    st.classList.add('show','ok');
+    st.innerHTML = '✅ APK found — you\'re good to go. This page only works while it\'s served from the same folder as the APK.';
+  }catch(e){
+    info.textContent = 'app-debug.apk';
+    st.classList.add('show');
+    st.innerHTML = '⚠️ Couldn\'t detect the APK next to this page. Make sure <b>app-debug.apk</b> sits in the same folder as this HTML file, and open the page through a server (not by double-clicking the file).';
+  }
+})();
+</script>
+</body>
+</html>
